@@ -1,7 +1,8 @@
 import sys
 import traceback
 from datetime import datetime
-from botdialog.bot_dialog import BotDialog
+from bots.dialog_bot import DialogBot
+from dialogs.main_dialog import MainDialog
 
 from aiohttp import web
 from aiohttp.web import Request, Response, json_response
@@ -9,7 +10,8 @@ from botbuilder.core import (
     BotFrameworkAdapterSettings,
     TurnContext,
     BotFrameworkAdapter,
-    ConversationState,    
+    ConversationState,
+    UserState,
     MemoryStorage
 )
 from botbuilder.core.integration import aiohttp_error_middleware
@@ -18,8 +20,13 @@ from botbuilder.schema import Activity, ActivityTypes
 SETTINGS = BotFrameworkAdapterSettings('','')
 ADAPTER = BotFrameworkAdapter(SETTINGS)
 
-CONMEMORY = ConversationState(MemoryStorage())
-botdialog = BotDialog(CONMEMORY)
+
+MEMORY = MemoryStorage()
+USER_STATE = UserState(MEMORY)
+CONVERSATION_STATE = ConversationState(MEMORY)
+
+DIALOG = MainDialog(USER_STATE)
+botdialog = DialogBot(CONVERSATION_STATE, USER_STATE, DIALOG)
 
 
 async def on_error(context: TurnContext, error: Exception):
@@ -40,6 +47,7 @@ async def on_error(context: TurnContext, error: Exception):
             value_type="https://www.botframework.com/schemas/error",
         )        
         await context.send_activity(trace_activity)
+    await CONVERSATION_STATE.delete(context)
 
 
 ADAPTER.on_turn_error = on_error

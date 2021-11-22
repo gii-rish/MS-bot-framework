@@ -16,4 +16,5 @@ def create_connection(data=None, customer_id=None):
                 row = list(cursor.fetchone())
                 return row
     except Exception as e:
+        return None
         print("Error:",e)
