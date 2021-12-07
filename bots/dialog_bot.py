@@ -43,6 +43,6 @@ class DialogBot(ActivityHandler):
             if member.id != turn_context.activity.recipient.id:
                 await turn_context.send_activity(
                     MessageFactory.text(
-                        f"Hi, {member.name}!. How can I help you?"
+                        f"Hi, How can I help you?"
                     )
                 )

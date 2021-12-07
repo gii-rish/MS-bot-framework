@@ -65,7 +65,7 @@ class TopLevelDialog(ComponentDialog):
         user_details.customerId = customerId
 
         result = create_connection(customer_id = customerId)
-        
+
         if result is not None:
             response = ''
             for key, value in zip(Constants.COLUMNS[1:], result[1:]):
@@ -77,17 +77,17 @@ class TopLevelDialog(ComponentDialog):
             await step_context.context.send_activity(MessageFactory.text(response))
         else:
             await step_context.context.send_activity(f"No details found for id {customerId}.")
-        
+
         prompt_options = PromptOptions(prompt=MessageFactory.text("Would you like to continue further?"))
         return await step_context.prompt(ConfirmPrompt.__name__, prompt_options)
-                
-            
+
+
     async def get_confirmation(self, step_context: WaterfallStepContext) -> DialogTurnResult:        
         user_details = step_context.values[self.USER_INFO]
         choice = step_context.result        
         if choice:
             return await step_context.begin_dialog(MoreDetailsDialog.__name__, user_details.customerId)
-        
+
         if user_details.name:
             await step_context.context.send_activity(MessageFactory.text(f"Thank you, {user_details.name}!"))        
         return await step_context.end_dialog()

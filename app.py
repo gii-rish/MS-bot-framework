@@ -16,8 +16,11 @@ from botbuilder.core import (
 )
 from botbuilder.core.integration import aiohttp_error_middleware
 from botbuilder.schema import Activity, ActivityTypes
+from config import DefaultConfig
 
-SETTINGS = BotFrameworkAdapterSettings('','')
+CONFIG = DefaultConfig()
+
+SETTINGS = BotFrameworkAdapterSettings(CONFIG.APP_ID, CONFIG.APP_PASSWORD)
 ADAPTER = BotFrameworkAdapter(SETTINGS)
 
 
@@ -73,8 +76,9 @@ async def messages(req: Request) -> Response:
 APP = web.Application(middlewares=[aiohttp_error_middleware])
 APP.router.add_post("/api/messages", messages)
 
+
 if __name__ == "__main__":
     try:
-        web.run_app(APP, host="0.0.0.0", port=3978)
+        web.run_app(APP, host="0.0.0.0", port=CONFIG.PORT)
     except Exception as error:
         raise error
