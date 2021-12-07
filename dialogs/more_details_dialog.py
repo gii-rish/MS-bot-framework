@@ -30,9 +30,6 @@ class MoreDetailsDialog(ComponentDialog):
 
 
     async def selection_step(self, step_context: WaterfallStepContext) -> DialogTurnResult:
-        # step_context.values['userInfo'] = UserDetails()
-        # user_details = step_context.result
-        print("----->>", self.customerId)
         message = "Please choose an option other than DONE to continue."        
         prompt_options = PromptOptions(
             prompt=MessageFactory.text(message),
