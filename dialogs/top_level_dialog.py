@@ -29,7 +29,9 @@ class TopLevelDialog(ComponentDialog):
             WaterfallDialog(
                 "WFDialog",
                 [
-                    self.get_customerID, self.acknowledgement_step, self.get_confirmation
+                    self.get_customerID,
+                    self.acknowledgement_step,
+                    self.get_confirmation,
                 ],
             )
         )
