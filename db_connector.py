@@ -1,9 +1,9 @@
 import pyodbc
 
-server = 'aptiveroutepoc.database.windows.net'
-database = 'aptiveroutepoc'
-username = 'aptive'
-password = 'Intelcore@123'   
+server = 'servername.database.windows.net'
+database = 'databasename'
+username = 'username'
+password = 'password'   
 driver= '{ODBC Driver 17 for SQL Server}'
 
 
