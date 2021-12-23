@@ -25,7 +25,7 @@ class DialogBot(ActivityHandler):
     async def on_turn(self, turn_context: TurnContext):
         await super().on_turn(turn_context)
         await self.conversation_state.save_changes(turn_context)
-        await self.user_state.save_changes(turn_context)        
+        await self.user_state.save_changes(turn_context)
 
 
     async def on_message_activity(self, turn_context: TurnContext):        
